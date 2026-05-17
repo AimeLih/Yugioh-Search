@@ -1,0 +1,6 @@
+package com.aimestart.yugiohsearch;
+import org.springframework.data.jpa.repository.JpaRepository;
+public interface CardRepository extends JpaRepository<Card, Long>{
+    boolean existsByName(String name);
+
+}
