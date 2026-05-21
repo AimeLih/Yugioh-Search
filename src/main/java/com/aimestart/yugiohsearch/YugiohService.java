@@ -60,4 +60,20 @@ public class YugiohService {
        }
        return cardRepository.saveAll(cardsToSave);
     }
+    public Card getCardByName(String name){
+        return cardRepository.getCardByName(name);
+    }
+    public List<Card> getCardsBySubstring(String name){
+        String cardname = name;
+        List<Card> cards = new ArrayList<>();
+        for(Card card:cardRepository.findAll()){
+            if(card.getName().contains(cardname)){
+                cards.add(card);
+            }
+        }
+        if(cards.isEmpty()){
+            throw new RuntimeException("No cards found with that name");
+        }
+        return cards;
+    }
 }
