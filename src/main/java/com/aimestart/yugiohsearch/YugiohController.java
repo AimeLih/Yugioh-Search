@@ -13,16 +13,17 @@ public class YugiohController {
 
     }
 
-    /*@GetMapping("/card")
-    public String getCardDescription(@RequestParam String name) {
-        return yugiohService.getCardDescription(name);
-    }
-    @GetMapping("/all")
-    public List<YugiohService.CardData> getAllCards(){
-        return yugiohService.fetchallCards();
-    }*/
-    @PostMapping("/import")
+
+    /*@PostMapping("/import")
     public List<Card> importAllCards(){
         return yugiohService.importAllCards();
+    }*/
+    @GetMapping("/card")
+    public Card getCardByName(@RequestParam String name){
+        return yugiohService.getCardByName(name);
+    }
+    @GetMapping("/card/substring")
+    public List<Card> getCardBySubstring(@RequestParam String name){
+        return yugiohService.getCardsBySubstring(name);
     }
 }
