@@ -14,10 +14,10 @@ public class YugiohController {
     }
 
 
-    /*@PostMapping("/import")
+    @PostMapping("/import")
     public List<Card> importAllCards(){
         return yugiohService.importAllCards();
-    }*/
+    }
     @GetMapping("/card")
     public Card getCardByName(@RequestParam String name){
         return yugiohService.getCardByName(name);
@@ -25,5 +25,9 @@ public class YugiohController {
     @GetMapping("/card/substring")
     public List<Card> getCardBySubstring(@RequestParam String name){
         return yugiohService.getCardsBySubstring(name);
+    }
+    @PutMapping("/card/update")
+    public void updatingCards(){
+        yugiohService.updateExistingCards();
     }
 }
