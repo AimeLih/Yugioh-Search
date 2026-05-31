@@ -16,12 +16,20 @@ public class Card {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String type;
+
+    @Column(nullable = false)
+    private int weight;
+
     public Card() {
     }
 
-    public Card(String name, String description) {
+    public Card(String name, String description, String type, int weight) {
         this.name = name;
         this.description = description;
+        this.type = type;
+        this.weight = weight;
     }
     public Long getId() {
         return id;
@@ -37,5 +45,17 @@ public class Card {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public int getWeight() {
+        return weight;
+    }
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 }
