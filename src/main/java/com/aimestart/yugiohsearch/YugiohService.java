@@ -91,6 +91,31 @@ public class YugiohService {
             }
         }
     }
+
+    public void updateDatabaseCards() {
+        List<Card> cards = cardRepository.findAll();
+      for(Card card : cards){
+          if(card.getType().equals("Effect Monster")){
+              if(card.getDescription().toLowerCase().contains("banish") || card.getDescription().toLowerCase().contains("destroy") &&
+                      card.getDescription().toLowerCase().contains("quick effect")) {
+                  card.setWeight(card.getWeight() + 6); //placeholder value
+              }
+              if(card.getDescription().toLowerCase().contains("banish") || card.getDescription().toLowerCase().contains("destroy") &&
+                      card.getDescription().toLowerCase().contains("target") && card.getDescription().toLowerCase().contains("quick effect")) {
+                  card.setWeight(card.getWeight() + 5); //placeholder value
+              }
+              if(card.getDescription().toLowerCase().contains("banish") || card.getDescription().toLowerCase().contains("destroy") &&
+                      card.getDescription().toLowerCase().contains("target")) {
+                  card.setWeight(card.getWeight() + 4); //placeholder value
+              }
+              if(card.getDescription().toLowerCase().contains("add")){
+                  card.setWeight(card.getWeight() + 3); //placeholder value
+              }
+          }
+      }
+
+    }
+
     public Card getCardByName(String name) {
         return cardRepository.getCardByName(name);
     }
