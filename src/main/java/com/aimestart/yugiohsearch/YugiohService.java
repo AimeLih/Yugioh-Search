@@ -5,7 +5,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 @Service
 public class YugiohService {
@@ -138,10 +138,4 @@ public class YugiohService {
         return cards;
     }
 
-    public void AssigningWeight(){
-        for (Card card : cardRepository.findAll()) {
-            card.setWeight(1);
-            cardRepository.save(card);
-        }
-    }
 }
