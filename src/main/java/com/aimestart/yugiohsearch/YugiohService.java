@@ -116,6 +116,10 @@ public class YugiohService {
 
     }
 
+    public List<Card> getAllCards(){
+      return cardRepository.findAll();
+    }
+
     public Card getCardByName(String name) {
         return cardRepository.getCardByName(name);
     }
