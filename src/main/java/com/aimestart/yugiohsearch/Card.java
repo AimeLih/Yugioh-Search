@@ -22,6 +22,7 @@ public class Card {
     @Column(nullable = false)
     private int weight;
 
+
     public Card() {
     }
 
