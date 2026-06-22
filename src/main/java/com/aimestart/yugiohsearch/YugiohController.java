@@ -2,6 +2,7 @@ package com.aimestart.yugiohsearch;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @RestController
 @RequestMapping("/yugioh")
 
