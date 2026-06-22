@@ -138,4 +138,26 @@ public class YugiohService {
         return cards;
     }
 
+    public List<Card> getRelatedCards(Card focusedcard) {
+        List<Card> cards = new ArrayList<>();
+        List<String> mentionednames = new ArrayList<>();
+        String tempcarddesc = focusedcard.getDescription().toLowerCase();
+        boolean loop = true;
+        if (tempcarddesc.contains("(this card is always treated as")) {
+            tempcarddesc = tempcarddesc.substring(tempcarddesc.indexOf(")") + 1);
+        }
+        while (loop) {
+            if (tempcarddesc.contains("\"")) {
+                if (tempcarddesc.indexOf("\"") + 1 == tempcarddesc.indexOf(focusedcard.getName().toLowerCase())) {
+                    tempcarddesc = tempcarddesc.substring(tempcarddesc.substring(tempcarddesc.indexOf("\"") + 1).indexOf("\""));
+                } else {
+                   // mentionednames.add(tempcarddesc.substring(tempcarddesc.indexOf("\"") + 1, tempcarddesc.substring(tempcarddesc.substring(tempcarddesc.substring(tempcarddesc.indexOf("\"") + 1)))));
+                }
+            } else {
+                loop = false;
+            }
+        }
+        return cards;
+    }
+
 }
