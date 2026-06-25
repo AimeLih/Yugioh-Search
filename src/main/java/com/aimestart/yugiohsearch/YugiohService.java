@@ -15,7 +15,8 @@ public class YugiohService {
 
     public record CardInfoResponse(List<CardData> data) {}
 
-    public record CardData(String name, String desc, String type) {}
+    public record CardData(String name, String desc, String type, int atk, int def, int level,
+                           String race, String attribute, int linkval, String archetype, ArrayList<String> linkmarkers) {}
 
     public YugiohService(RestClient.Builder builder, CardRepository cardRepository) {
         this.restClient = builder.baseUrl("https://db.ygoprodeck.com/api/v7").build();
@@ -47,7 +48,7 @@ public class YugiohService {
         return cardRepository.saveAll(cardsToSave);
     }
 
-    public void updateExistingCards() {
+    public void updateExistingCardsWeight() {
         List<Card> cards = cardRepository.findAll();
         List<CardData> apiCards = fetchallCards();
         for (Card card : cards) {
@@ -87,6 +88,45 @@ public class YugiohService {
                         }
                     }
                     cardRepository.save(card);
+                }
+            }
+        }
+    }
+
+    public void updateExistingCards() {
+        List<Card> cards = cardRepository.findAll();
+        List<CardData> apiCards = fetchallCards();
+        for (Card card : cards) {
+            if(apiCards.contains(card.getName())){
+                CardData apiCard = apiCards.get(apiCards.indexOf(card.getName()));
+                if(card.getType().contains("Link") && card.getType().contains("Monster")){
+                    card.setLinkvalue(apiCard.linkval());
+                    card.setLinkmarkers(apiCard.linkmarkers());
+                    if(apiCard.archetype() != null) {
+                        card.setArchetype(apiCard.archetype());
+                    }
+                    cardRepository.save(card);
+                    continue;
+                }
+                if(card.getType().contains("Monster")){
+                    card.setAtk(apiCard.atk());
+                    card.setDef(apiCard.def());
+                    card.setLevel(apiCard.level());
+                    card.setRace(apiCard.race());
+                    card.setAttribute(apiCard.attribute());
+                    if(apiCard.archetype() != null) {
+                        card.setArchetype(apiCard.archetype());
+                    }
+                    cardRepository.save(card);
+                    continue;
+                }
+                if(card.getType().contains("Spell") || card.getType().contains("Trap")) {
+                    card.setRace(apiCard.race());
+                    if (apiCard.archetype() != null) {
+                        card.setArchetype(apiCard.archetype());
+                    }
+                    cardRepository.save(card);
+                    continue;
                 }
             }
         }
