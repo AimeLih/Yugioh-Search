@@ -2,6 +2,8 @@ package com.aimestart.yugiohsearch;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -22,6 +24,37 @@ public class Card {
     @Column(nullable = false)
     private int weight;
 
+    @Column()
+    private int atk;
+
+    @Column()
+    private int def;
+
+    @Column()
+    private int level;
+
+    @Column(columnDefinition = "TEXT")
+    private String race;
+
+    @Column(columnDefinition = "TEXT")
+    private String attribute;
+
+    @Column(columnDefinition = "TEXT")
+    private String archetype;
+
+    @Column()
+    private int scale;
+
+    @Column()
+    private int linkvalue;
+
+
+    @Column()
+    private ArrayList<String> linkmarkers;
+
+
+
+
 
     public Card() {
     }
@@ -32,31 +65,112 @@ public class Card {
         this.type = type;
         this.weight = weight;
     }
+
     public Long getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public int getWeight() {
         return weight;
     }
+
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
+
+    public int getDef() {
+        return def;
+    }
+
+    public void setDef(int def) {
+        this.def = def;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public String getArchetype() {
+        return archetype;
+    }
+
+    public void setArchetype(String archetype) {
+        this.archetype = archetype;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getLinkvalue() {
+        return linkvalue;
+    }
+
+    public void setLinkvalue(int linkvalue) {
+        this.linkvalue = linkvalue;
+    }
+
+    public ArrayList<String> getLinkmarkers() {
+        return linkmarkers;
+    }
+
+    public void setLinkmarkers(ArrayList<String> linkmarkers) {
+        this.linkmarkers = linkmarkers;
     }
 }
