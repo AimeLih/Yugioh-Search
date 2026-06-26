@@ -39,4 +39,9 @@ public class YugiohController {
     public void updatingCards(){
         yugiohService.updateExistingCardsWeight();
     }
+
+    @PutMapping("/card/update/database")
+    public void updatingExistingCards(){
+        yugiohService.updateExistingCards();
+    }
 }

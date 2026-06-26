@@ -5,6 +5,9 @@ import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -15,8 +18,8 @@ public class YugiohService {
 
     public record CardInfoResponse(List<CardData> data) {}
 
-    public record CardData(String name, String desc, String type, int atk, int def, int level,
-                           String race, String attribute, int linkval, String archetype, ArrayList<String> linkmarkers) {}
+    public record CardData(String name, String desc, String type, Integer atk, Integer def, Integer level,
+                           String race, String attribute, Integer linkval, String archetype, ArrayList<String> linkmarkers) {}
 
     public YugiohService(RestClient.Builder builder, CardRepository cardRepository) {
         this.restClient = builder.baseUrl("https://db.ygoprodeck.com/api/v7").build();
@@ -95,10 +98,16 @@ public class YugiohService {
 
     public void updateExistingCards() {
         List<Card> cards = cardRepository.findAll();
-        List<CardData> apiCards = fetchallCards();
+        Map<String, CardData> apiCards = fetchallCards().stream()
+                .collect(Collectors.toMap(CardData::name, Function.identity()));
+
         for (Card card : cards) {
-            if(apiCards.contains(card.getName())){
-                CardData apiCard = apiCards.get(apiCards.indexOf(card.getName()));
+            CardData apiCard = apiCards.get(card.getName());
+
+            if (apiCard == null) {
+                continue;
+            }
+
                 if(card.getType().contains("Link") && card.getType().contains("Monster")){
                     card.setLinkvalue(apiCard.linkval());
                     card.setLinkmarkers(apiCard.linkmarkers());
@@ -126,9 +135,8 @@ public class YugiohService {
                         card.setArchetype(apiCard.archetype());
                     }
                     cardRepository.save(card);
-                    continue;
                 }
-            }
+
         }
     }
 

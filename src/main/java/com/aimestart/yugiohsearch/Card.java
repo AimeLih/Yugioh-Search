@@ -25,13 +25,13 @@ public class Card {
     private int weight;
 
     @Column()
-    private int atk;
+    private Integer atk;
 
     @Column()
-    private int def;
+    private Integer def;
 
     @Column()
-    private int level;
+    private Integer level;
 
     @Column(columnDefinition = "TEXT")
     private String race;
@@ -43,10 +43,10 @@ public class Card {
     private String archetype;
 
     @Column()
-    private int scale;
+    private Integer scale;
 
     @Column()
-    private int linkvalue;
+    private Integer linkvalue;
 
 
     @Column()
@@ -106,7 +106,7 @@ public class Card {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -114,7 +114,7 @@ public class Card {
         return atk;
     }
 
-    public void setAtk(int atk) {
+    public void setAtk(Integer atk) {
         this.atk = atk;
     }
 
@@ -122,7 +122,7 @@ public class Card {
         return def;
     }
 
-    public void setDef(int def) {
+    public void setDef(Integer def) {
         this.def = def;
     }
 
@@ -154,7 +154,7 @@ public class Card {
         return scale;
     }
 
-    public void setScale(int scale) {
+    public void setScale(Integer scale) {
         this.scale = scale;
     }
 
@@ -162,7 +162,7 @@ public class Card {
         return linkvalue;
     }
 
-    public void setLinkvalue(int linkvalue) {
+    public void setLinkvalue(Integer linkvalue) {
         this.linkvalue = linkvalue;
     }
 
