@@ -6,6 +6,7 @@ import org.springframework.web.client.RestClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class YugiohService {
     public record CardInfoResponse(List<CardData> data) {}
 
     public record CardData(String name, String desc, String type, Integer atk, Integer def, Integer level,
-                           String race, String attribute, Integer linkval, String archetype, ArrayList<String> linkmarkers) {}
+                           String race, String attribute, Integer linkval, String archetype, String [] linkmarkers, String Staple, Integer scale) {}
 
     public YugiohService(RestClient.Builder builder, CardRepository cardRepository) {
         this.restClient = builder.baseUrl("https://db.ygoprodeck.com/api/v7").build();
@@ -107,10 +108,19 @@ public class YugiohService {
             if (apiCard == null) {
                 continue;
             }
+                if("yes".equalsIgnoreCase(apiCard.Staple())) {
+                    card.setStaple(true);
+                } else {
+                    card.setStaple(false);
+                }
 
+                if(card.getType().contains("Pendulum")){
+                    card.setScale(apiCard.scale());
+                    cardRepository.save(card);
+                }
                 if(card.getType().contains("Link") && card.getType().contains("Monster")){
                     card.setLinkvalue(apiCard.linkval());
-                    card.setLinkmarkers(apiCard.linkmarkers());
+                    card.setLinkmarkers(List.of(apiCard.linkmarkers()));
                     if(apiCard.archetype() != null) {
                         card.setArchetype(apiCard.archetype());
                     }
