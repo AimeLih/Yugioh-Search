@@ -1,8 +1,11 @@
 package com.aimestart.yugiohsearch;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cards")
@@ -49,9 +52,12 @@ public class Card {
     private Integer linkvalue;
 
 
-    @Column()
-    private ArrayList<String> linkmarkers;
 
+    @Column(name = "LinkMarkers", columnDefinition = "text[]")
+    private List<String> linkmarkers = new ArrayList<>();
+
+    @Column()
+    private Boolean staple;
 
 
 
@@ -166,11 +172,19 @@ public class Card {
         this.linkvalue = linkvalue;
     }
 
-    public ArrayList<String> getLinkmarkers() {
+    public List<String> getLinkmarkers() {
         return linkmarkers;
     }
 
-    public void setLinkmarkers(ArrayList<String> linkmarkers) {
+    public void setLinkmarkers(List<String> linkmarkers) {
         this.linkmarkers = linkmarkers;
+    }
+
+    public Boolean isStaple() {
+        return staple;
+    }
+
+    public void setStaple(Boolean staple) {
+        this.staple = staple;
     }
 }
