@@ -5,6 +5,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -138,30 +139,14 @@ public class YugiohService {
         return cards;
     }
 
-    public List<String> getRelatedCards(Card focusedcard) {
-        List<String> mentionedNames = new ArrayList<>();
-        String tempcarddesc = focusedcard.getDescription().toLowerCase();
-
-        if (tempcarddesc.contains("(this card is always treated as")) {
-            tempcarddesc = tempcarddesc.substring(tempcarddesc.indexOf(")") + 1);
+    public String ifExtender(Card focusedcard) {
+        String desc = focusedcard.getDescription().toLowerCase();
+        if (Pattern.compile("summon\\s+\\d+").matcher(desc).find()) {
+            return "summon extender";
         }
-
-        int i = 0;
-        while (i < tempcarddesc.length()) {
-            int firstQuote = tempcarddesc.indexOf("\"",i);
-            if (firstQuote == -1) {
-                break;
-            }
-            int secondQuote = tempcarddesc.indexOf("\"",firstQuote + 1);
-            if (secondQuote == -1) {
-                break;
-            }
-            if (!(tempcarddesc.substring(firstQuote + 1,secondQuote).equals(focusedcard.getName()))) {
-              mentionedNames.add(tempcarddesc.substring(firstQuote + 1,secondQuote));
-            }
-            i = secondQuote + 1;
+        if (Pattern.compile("add\\s+\\d+").matcher(desc).find()) {
+            return "add extender";
         }
-        return mentionedNames;
+        return "not an extender";
     }
-
 }
