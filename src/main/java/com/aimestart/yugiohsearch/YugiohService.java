@@ -102,8 +102,12 @@ public class YugiohService {
         Map<String, CardData> apiCards = fetchallCards().stream()
                 .collect(Collectors.toMap(CardData::name, Function.identity()));
 
-        for (Card card : cards) {
-            CardData apiCard = apiCards.get(card.getName());
+       for (Card card : cards) {
+           if(card.isStaple() == null){
+               card.setStaple(true);
+               cardRepository.save(card);
+           }
+           /* CardData apiCard = apiCards.get(card.getName());
 
             if (apiCard == null) {
                 continue;
@@ -146,7 +150,7 @@ public class YugiohService {
                     }
                     cardRepository.save(card);
                 }
-
+*/
         }
     }
 
